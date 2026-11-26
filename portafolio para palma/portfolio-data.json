@@ -1,0 +1,60 @@
+{
+  "nombre": "Santiago Polanco Toro",
+  "primerNombre": "Polanco",
+  "foto": "perfil.jpeg",
+  "titulo": "Santiago Polanco Toro",
+  "bienvenida": "Hola, soy Polanco",
+  "presentacion": "Soy de Cali, Colombia.",
+  "descripcion": "Me gusta el cine y ahora estoy cursando una tecnicatura en programación.",
+  "estudios": [
+    {
+      "titulo": "Secundario técnico",
+      "detalle": "Programación · En curso",
+      "periodo": "",
+      "icono": "🎓",
+      "enlace": null
+    },
+    {
+      "titulo": "Robótica",
+      "detalle": "Certificado de la Nación Argentina",
+      "periodo": "",
+      "icono": "🤖",
+      "enlace": null
+    }
+  ],
+  "habilidades": [
+    {
+      "titulo": "Liderazgo",
+      "detalle": "Me encargo de que el grupo avance.",
+      "icono": "🧭",
+      "nivel": 95
+    },
+    {
+      "titulo": "Confianza",
+      "detalle": "Confío en mi trabajo y en los demás.",
+      "icono": "💪",
+      "nivel": 86
+    },
+    {
+      "titulo": "Puntualidad",
+      "detalle": "Me gusta llegar a tiempo y cumplir.",
+      "icono": "⏰",
+      "nivel": 85
+    },
+    {
+      "titulo": "Compañerismo",
+      "detalle": "Trabajo bien en equipo y ayudo cuando hace falta.",
+      "icono": "🤝",
+      "nivel": 67
+    }
+  ],
+  "contacto": {
+    "texto": "Si querés hablar, escribime.",
+    "email": "santiagopolanco045@gmail.com",
+    "telefono": "2224442278",
+    "whatsappNumero": "2224442278",
+    "whatsappMensaje": "Hola Polanco, vi tu portafolio y quería hablar con vos",
+    "instagram": "https://www.instagram.com/S_polanco76/",
+    "ubicacion": "Cali, Colombia"
+  }
+}

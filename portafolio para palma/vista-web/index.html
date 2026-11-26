@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio de Polanco</title>
+<style>
+:root{--navy:#0B1F3A;--azul:#1D4E89;--ink:#102A43;--muted:#5B7189;--line:#D8E3EE;--bg:#F4F7FA}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{max-width:520px;margin:0 auto;background:#fff;min-height:100vh}
+.cabecera{height:150px;position:relative;background:var(--navy);padding:20px;display:flex;flex-direction:column;justify-content:center}
+.etiqueta{color:#C7D9EC;font-size:12px;letter-spacing:1.2px;margin-bottom:6px}
+.cabecera h1{color:#fff;font-size:23px;line-height:1.2;margin:0}
+.avatar{position:absolute;bottom:-26px;left:20px;width:92px;height:92px;border-radius:18px;border:3px solid #fff;overflow:hidden;background:#fff}
+.avatar img{width:100%;height:100%;object-fit:cover}
+main{padding:46px 16px 24px;min-height:520px}
+h2{font-size:20px;margin:0 0 12px}
+p{line-height:1.5;margin:0 0 8px}
+.suave{color:var(--muted)}
+.caja{background:#fff;border-left:4px solid var(--azul);border-radius:12px;padding:16px;margin-bottom:18px}
+.cabecera-seccion{background:var(--navy);border-radius:12px;display:flex;align-items:center;gap:14px;padding:14px 16px;margin-bottom:16px}
+.icono-caja{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:25px;flex:0 0 auto}
+.cabecera-seccion h2{color:#fff;margin:0}
+.cabecera-seccion p{color:#C7D9EC;font-size:14px;margin:3px 0 0}
+.tarjeta{background:#fff;border:1px solid var(--line);border-left:4px solid var(--azul);border-radius:12px;padding:14px;margin-bottom:12px}
+.encabezado-tarjeta{display:flex;align-items:center;gap:10px}
+.encabezado-tarjeta .icono{font-size:24px}
+.titulo{font-weight:700;flex:1}
+.periodo{font-size:12px;color:var(--muted)}
+.nivel{font-size:13px;font-weight:700;color:var(--azul)}
+.barra{height:7px;background:var(--line);border-radius:4px;margin-top:10px;overflow:hidden}
+.relleno{height:100%;background:var(--navy)}
+.botones{display:grid;gap:9px;margin-top:16px}
+button{border:1.5px solid var(--navy);border-radius:10px;background:var(--navy);color:#fff;font:inherit;font-weight:700;padding:12px;cursor:pointer}
+button.azul{background:var(--azul);border-color:var(--azul)}
+button.borde{background:transparent;color:var(--navy)}
+nav{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:#fff}
+nav button{border:0;border-radius:0;background:#fff;color:var(--muted);padding:13px 2px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+nav button.activo{color:var(--navy);box-shadow:inset 0 -3px 0 var(--navy)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="cabecera">
+    <div class="etiqueta">PORTAFOLIO</div>
+    <h1 id="titulo"></h1>
+    <div class="avatar" id="avatar"></div>
+  </div>
+  <main id="contenido"></main>
+  <nav id="tabs"></nav>
+</div>
+<script id="datos" type="application/json">{"nombre":"Santiago Polanco Toro","primerNombre":"Polanco","foto":"perfil.jpeg","titulo":"Santiago Polanco Toro","bienvenida":"Hola, soy Polanco","presentacion":"Soy de Cali, Colombia.","descripcion":"Me gusta el cine y ahora estoy cursando una tecnicatura en programación.","estudios":[{"titulo":"Secundario técnico","detalle":"Programación · En curso","periodo":"","icono":"🎓","enlace":null},{"titulo":"Robótica","detalle":"Certificado de la Nación Argentina","periodo":"","icono":"🤖","enlace":null}],"habilidades":[{"titulo":"Liderazgo","detalle":"Me encargo de que el grupo avance.","icono":"🧭","nivel":95},{"titulo":"Confianza","detalle":"Confío en mi trabajo y en los demás.","icono":"💪","nivel":86},{"titulo":"Puntualidad","detalle":"Me gusta llegar a tiempo y cumplir.","icono":"⏰","nivel":85},{"titulo":"Compañerismo","detalle":"Trabajo bien en equipo y ayudo cuando hace falta.","icono":"🤝","nivel":67}],"contacto":{"texto":"Si querés hablar, escribime.","email":"santiagopolanco045@gmail.com","telefono":"2224442278","whatsappNumero":"2224442278","whatsappMensaje":"Hola Polanco, vi tu portafolio y quería hablar con vos","instagram":"https://www.instagram.com/S_polanco76/","ubicacion":"Cali, Colombia"}}</script>
+<script>
+const d = JSON.parse(document.getElementById('datos').textContent);
+const contenido = document.getElementById('contenido');
+const tabsEl = document.getElementById('tabs');
+const pestanias = ['inicio', 'estudios', 'habilidades', 'contacto'];
+let actual = 'inicio';
+
+const e = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function boton(texto, url, clase = '', destino = '') {
+  const atributo = destino ? `data-destino="${e(destino)}"` : `data-url="${e(url)}"`;
+  return `<button class="${clase}" ${atributo}>${e(texto)}</button>`;
+}
+
+function cabecera(icono, titulo, subtitulo) {
+  return `<div class="cabecera-seccion"><div class="icono-caja">${e(icono)}</div><div><h2>${e(titulo)}</h2>${subtitulo ? `<p>${e(subtitulo)}</p>` : ''}</div></div>`;
+}
+
+function inicio() {
+  return `
+    <div class="caja">
+      <h2>${e(d.bienvenida)}</h2>
+      <p>${e(d.presentacion)}</p>
+      <p class="suave">${e(d.descripcion)}</p>
+      <div class="botones">
+        ${boton('Estudios', '', '', 'estudios')}
+        ${boton('Habilidades', '', 'azul', 'habilidades')}
+        ${boton('Contacto', '', 'borde', 'contacto')}
+      </div>
+    </div>`;
+}
+
+function estudios() {
+  return cabecera('🎓', 'Estudios') + d.estudios.map(i => `
+    <div class="tarjeta">
+      <div class="encabezado-tarjeta"><span class="icono">${e(i.icono)}</span><span class="titulo">${e(i.titulo)}</span><span class="periodo">${e(i.periodo ?? '')}</span></div>
+      <p class="suave">${e(i.detalle)}</p>
+      ${i.enlace ? boton(i.enlace.texto, i.enlace.url, 'borde') : ''}
+    </div>`).join('');
+}
+
+function habilidades() {
+  return cabecera('📊', 'Habilidades') + d.habilidades.map(i => `
+    <div class="tarjeta">
+      <div class="encabezado-tarjeta"><span class="icono">${e(i.icono)}</span><span class="titulo">${e(i.titulo)}</span><span class="nivel">${Number(i.nivel) || 0}/100</span></div>
+      <p class="suave">${e(i.detalle)}</p>
+      <div class="barra"><div class="relleno" style="width:${Number(i.nivel) || 0}%"></div></div>
+    </div>`).join('');
+}
+
+function contacto() {
+  const c = d.contacto;
+  const wa = `https://wa.me/${c.whatsappNumero}?text=${encodeURIComponent(c.whatsappMensaje)}`;
+  return `
+    ${cabecera('✉', 'Contacto', c.texto)}
+    <div class="tarjeta">
+      <p>✉ ${e(c.email)}</p>
+      <p>📞 ${e(c.telefono)}</p>
+      ${c.ubicacion ? `<p>⌂ ${e(c.ubicacion)}</p>` : ''}
+    </div>
+    <div class="botones">
+      ${boton('WhatsApp', wa, 'azul')}
+      ${boton('Email', `mailto:${c.email}`)}
+      ${boton('Instagram', c.instagram, 'borde')}
+    </div>`;
+}
+
+function render() {
+  document.getElementById('titulo').textContent = d.titulo;
+  document.getElementById('avatar').innerHTML = d.foto
+    ? `<img src="${e(d.foto)}" alt="Foto de ${e(d.primerNombre || d.nombre)}">`
+    : '';
+
+  contenido.innerHTML =
+    actual === 'inicio' ? inicio() :
+    actual === 'estudios' ? estudios() :
+    actual === 'habilidades' ? habilidades() : contacto();
+
+  const nombres = { inicio: 'Inicio', estudios: 'Estudios', habilidades: 'Habilidades', contacto: 'Contacto' };
+  tabsEl.innerHTML = pestanias.map(p =>
+    `<button class="${p === actual ? 'activo' : ''}" data-tab="${p}">${nombres[p]}</button>`
+  ).join('');
+}
+
+tabsEl.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-tab]');
+  if (b) { actual = b.dataset.tab; render(); }
+});
+
+contenido.addEventListener('click', ev => {
+  const b = ev.target.closest('button');
+  if (!b) return;
+  if (b.dataset.destino) { actual = b.dataset.destino; render(); return; }
+  if (b.dataset.url) window.open(b.dataset.url, '_blank', 'noopener');
+});
+
+render();
+</script>
+</body>
+</html>
